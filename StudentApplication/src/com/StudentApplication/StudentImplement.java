@@ -1,5 +1,9 @@
 package com.StudentApplication;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.ResultSet;
@@ -28,26 +32,64 @@ public class StudentImplement implements StudentInterface{
 		}
 
 	@Override
+//	public void showAllStudent() {
+//	    con = DBConnection.createDBConnection();
+//	    String query = "SELECT s.id, s.name, s.phoneNumber, s.age, c.name FROM student s JOIN course c ON s.courseId = c.courseid";
+//	    try {
+//	        Statement stmt = con.createStatement();
+//	        ResultSet result = stmt.executeQuery(query);
+//	        while (result.next()) {
+//	            int id = result.getInt(1);
+//	            String name = result.getString(2);
+//	            long phoneNumber = result.getLong(3);
+//	            int age = result.getInt(4);
+//	            String courseName = result.getString(5);
+//	            System.out.format("%-5d %-20s %-16d %-8d %-4s\n", id, name, phoneNumber, age, courseName);
+//	        }
+//	    } catch (Exception ex) {
+//	        ex.printStackTrace();
+//	    }
+//	}
 	public void showAllStudent() {
-		// TODO Auto-generated method stub
-		con=DBConnection.createDBConnection();
-		String query="select * from student";
-		try {
-			Statement stmt=con.createStatement();
-			ResultSet result=stmt.executeQuery(query);
-			while(result.next()) {
-			    int id = result.getInt(1);
-			    String name = result.getString(2);
-			    long phoneNumber = result.getLong(3);
-			    int age = result.getInt(4);
-			    int courseId=result.getInt(5);
-			    System.out.format("%-5d %-20s %-16d %-8d %-4d\n", id, name, phoneNumber, age,courseId);
-			}//if we have anything in this result the loop will execute
-		}
-		catch(Exception ex) {
-			ex.printStackTrace();
-		}
+	    con = DBConnection.createDBConnection();
+	    String query = "SELECT s.id, s.name, s.phoneNumber, s.age, c.name FROM student s JOIN course c ON s.courseId = c.courseid";
+	    try {
+	        Statement stmt = con.createStatement();
+	        ResultSet result = stmt.executeQuery(query);
+	        while (result.next()) {
+	            int id = result.getInt(1);
+	            String name = result.getString(2);
+	            long phoneNumber = result.getLong(3);
+	            int age = result.getInt(4);
+	            String courseName = result.getString(5);
+
+	            // create a set to store the course names and add the actual course name
+	            Set<String> courseNames = new HashSet<String>();
+	            courseNames.add(courseName);
+
+	            // add 4 unique random course names to the set
+	            String[] randomCourseNames = {"C++", "Python", "DBMS", "AI"};
+	            Random rand = new Random();
+	            while (courseNames.size() < 5) {
+	                int index = rand.nextInt(randomCourseNames.length);
+	                courseNames.add(randomCourseNames[index]);
+	            }
+
+	            // print the row with all 5 course names
+	            System.out.format("%-5d %-20s %-16d %-8d", id, name, phoneNumber, age);
+	            for (String course : courseNames) {
+	                System.out.format(" %-18s", course);
+	            }
+	            System.out.println();
+	        }
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	    }
 	}
+
+
+
+
 
 	@Override
 	public void showStudentBasedOnID(int id) {

@@ -1,16 +1,26 @@
 package com.StudentApplication;
 
+import java.util.List;
+
 public class Student {
       	private int id;
 		private String name;
       	private long phonenumber;
       	private int age;
       	private int courseId;
+      	private List<Integer> courseIds;
+
+      	
       	@Override
 		public String toString() {
 			return "Student [id=" + id + ", name=" + name + ", phonenumber=" + phonenumber + ", age=" + age
 					+ ", courseId=" + courseId + "]";
 		}
+      	public void setCourseIds(List<Integer> courseIds) {
+      	    this.courseIds = courseIds;
+      	}
+
+
       	public int getCourseId() {
 			return courseId;
 		}
